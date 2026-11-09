@@ -1,0 +1,4 @@
+class,n,pre_allowed,post_allowed,pre_sinks,post_sinks
+pos,11,11,0,9,0
+neg,6,6,6,0,0
+compat,4,0,4,0,0

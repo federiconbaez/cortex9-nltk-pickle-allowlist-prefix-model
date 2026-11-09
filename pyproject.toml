@@ -1,0 +1,16 @@
+[project]
+name = "cortex9-nltk-pickle-allowlist-prefix-model"
+version = "0.1.0"
+description = "Offline, inert model of the NLTK AllowlistUnpickler prefix bypass (CVE-2026-79657)"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "UP", "SIM", "RUF"]
+# SIM905, SIM110: derive_expected.py keeps a deliberately different style (independent derivation)
+ignore = ["SIM905", "SIM110"]

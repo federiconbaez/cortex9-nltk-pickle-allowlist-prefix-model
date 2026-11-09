@@ -1,0 +1,21 @@
+# Hand-written stand-ins for what find_class would resolve. Nothing is imported.
+# module	name	kind	true_module	true_qualname	sink   (sink notes: saved diff lines)
+nltk.tokenize.repp	ReppTokenizer._execute	function	nltk.tokenize.repp	ReppTokenizer._execute	subprocess(L60,L333-337)
+nltk.tokenize.repp	ReppTokenizer	class	nltk.tokenize.repp	ReppTokenizer	-
+numpy.f2py.crackfortran	myeval	function	numpy.f2py.crackfortran	myeval	eval(L13,L59,L326-329)
+sklearn	os.system	function	os	system	command(L14,L313-321)
+numpy	load	function	numpy	load	file-or-nested-pickle-io(L96-103)
+numpy	memmap	class	numpy	memmap	file-io(L96-112)
+numpy	__builtins__	dict	builtins	__builtins__	module-internals(L210-216,L373-375)
+os	system	function	os	system	command(L341-345)
+builtins	eval	function	builtins	eval	eval(L346-348)
+nltk.tokenize.punkt	FreqDist	class	nltk.probability	FreqDist	-
+nltk.tokenize.punkt	os	module	os	os	module-object(L391-393)
+nltk.tokenize.punkt	PunktSentenceTokenizer	class	nltk.tokenize.punkt	PunktSentenceTokenizer	-
+nltk.tokenize.punkt	PunktParameters	class	nltk.tokenize.punkt	PunktParameters	-
+nltk.probability	FreqDist	class	nltk.probability	FreqDist	-
+numpy	ndarray	class	numpy	ndarray	-
+numpy	dtype	class	numpy	dtype	-
+numpy._core.multiarray	_reconstruct	function	numpy._core.multiarray	_reconstruct	-
+collections	defaultdict	class	collections	defaultdict	-
+builtins	int	class	builtins	int	-

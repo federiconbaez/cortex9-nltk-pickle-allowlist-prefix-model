@@ -1,0 +1,56 @@
+_DENIED_MODULE_PREFIXES = (
+    "os",
+    "nt",
+    "posix",
+    "subprocess",
+    "sys",
+    "socket",
+    "shutil",
+    "signal",
+    "pty",
+    "popen2",
+    "commands",
+    "ctypes",
+    "importlib",
+    "runpy",
+    "builtins",  # builtins.int etc. must be requested via allowed_globals
+    "webbrowser",
+    "pdb",
+    "bdb",
+    "code",
+    "codeop",
+    "multiprocessing",
+    "asyncio",
+    "threading",
+    "pickle",
+    "numpy.f2py",
+    "numpy.ctypeslib",
+    "numpy.distutils",
+    "numpy.testing",
+    "nltk.tokenize.repp",
+    "nltk.internals",
+)
+
+# Individual dangerous globals that live in an *allowed* namespace and so are
+# not caught by :data:`_DENIED_MODULE_PREFIXES`. ``numpy.load`` (and friends)
+# have ``__module__ == "numpy"`` yet perform file / nested-pickle I/O, so a
+# broad ``numpy`` allow (needed for genuine array unpickling) would otherwise
+# expose them. Matched both on the requested ``(module, name)`` and on the
+# resolved object's ``(__module__, __qualname__)``.
+_DENIED_GLOBALS = frozenset(
+    {
+        ("numpy", "load"),
+        ("numpy", "loadtxt"),
+        ("numpy", "fromfile"),
+        ("numpy", "fromregex"),
+        ("numpy", "genfromtxt"),
+        ("numpy", "save"),
+        ("numpy", "savez"),
+        ("numpy", "savez_compressed"),
+        ("numpy", "savetxt"),
+        ("numpy", "memmap"),
+        ("numpy", "DataSource"),
+        ("numpy", "vectorize"),
+        ("pandas", "read_pickle"),
+    }
+)

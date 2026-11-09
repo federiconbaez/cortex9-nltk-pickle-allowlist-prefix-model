@@ -1,0 +1,23 @@
+# Hand-derived from the saved diff. class: pos (gadget), neg (legit, same on both), compat (legit, differs).
+# id	class	config	encoding	module	name	hand_pre	hand_post
+p01_repp_execute_dotted	pos	punkt	stack_global	nltk.tokenize.repp	ReppTokenizer._execute	ALLOW	REJECT_DOTTED
+p02_repp_class	pos	punkt	global	nltk.tokenize.repp	ReppTokenizer	ALLOW	REJECT_DENIED_MODULE
+p03_f2py_myeval	pos	model	stack_global	numpy.f2py.crackfortran	myeval	ALLOW	REJECT_DENIED_MODULE
+p04_sklearn_dotted_os_system	pos	model	stack_global	sklearn	os.system	ALLOW	REJECT_DOTTED
+p05_numpy_load	pos	model	stack_global	numpy	load	ALLOW	REJECT_DENIED_GLOBAL
+p06_numpy_dunder_builtins	pos	model	memo	numpy	__builtins__	ALLOW	REJECT_DUNDER
+p07_os_system_misconfig	pos	misconfig_os	global	os	system	ALLOW	REJECT_DENIED_MODULE
+p08_builtins_eval_misconfig	pos	misconfig_eval	global	builtins	eval	ALLOW	REJECT_ALLOWED_BUT_DENIED_MODULE
+p09_punkt_reexport_freqdist	pos	punkt	memo	nltk.tokenize.punkt	FreqDist	ALLOW	REJECT_NOT_ALLOWLISTED
+p10_punkt_os_module_object	pos	punkt	stack_global	nltk.tokenize.punkt	os	ALLOW	REJECT_NOT_ALLOWLISTED
+p11_numpy_memmap	pos	model	global	numpy	memmap	ALLOW	REJECT_DENIED_GLOBAL
+n01_punkt_sentence_tokenizer	neg	punkt	stack_global	nltk.tokenize.punkt	PunktSentenceTokenizer	ALLOW	ALLOW
+n02_punkt_parameters	neg	punkt	global	nltk.tokenize.punkt	PunktParameters	ALLOW	ALLOW
+n03_numpy_ndarray	neg	model	stack_global	numpy	ndarray	ALLOW	ALLOW
+n04_numpy_dtype	neg	model	global	numpy	dtype	ALLOW	ALLOW
+n05_numpy_reconstruct	neg	model	memo	numpy._core.multiarray	_reconstruct	ALLOW	ALLOW
+n06_sklearn_unmodelled	neg	model	stack_global	sklearn.svm._classes	SVC	ALLOW	ALLOW_UNRESOLVED
+c01_model_defaultdict	compat	model	stack_global	collections	defaultdict	REJECT_NOT_ALLOWLISTED	ALLOW
+c02_punkt_freqdist_home	compat	punkt	stack_global	nltk.probability	FreqDist	REJECT_NOT_ALLOWLISTED	ALLOW
+c03_punkt_builtins_int	compat	punkt	global	builtins	int	REJECT_NOT_ALLOWLISTED	ALLOW
+c04_punkt_defaultdict	compat	punkt	memo	collections	defaultdict	REJECT_NOT_ALLOWLISTED	ALLOW
