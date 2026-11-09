@@ -22,8 +22,10 @@ Ayuda: `PYTHONPATH=src python3 -m c9nltk <config> <hex>`; el hex sale de
 3. **Gadget dentro del espacio permitido.** `numpy.f2py.crackfortran.myeval`
    con la lista del transition parser. (pre `ALLOW`, post
    `REJECT_DENIED_MODULE`, L236-240)
-4. **Nombre con punto.** `sklearn` + `os.system`. ¿Por qué el pre lo deja
-   pasar si solo mira el módulo? (post `REJECT_DOTTED`, L205-209)
+4. **Gadget por qualname.** `nltk.tokenize.repp` + `ReppTokenizer._execute`
+   con la lista de Punkt. ¿Qué lo frena en el post? (`REJECT_DENIED_MODULE`,
+   L236-240; la guarda de nombres con punto es de GHSA-4489 y queda fuera de
+   alcance)
 5. **Sink en el mismo módulo.** `numpy.load`: el módulo `numpy` está
    permitido. (post `REJECT_DENIED_GLOBAL`, L219-223)
 

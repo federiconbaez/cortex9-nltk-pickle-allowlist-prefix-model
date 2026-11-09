@@ -8,7 +8,12 @@ gadget dentro del espacio permitido, como
 `numpy.f2py.crackfortran.myeval` (eval). El fix, commit
 `c3e37113742a1ebeeb4f2ca58941f320f98805ea` (NLTK 3.10.3), agrega listas
 exactas `(módulo, qualname)`, una denylist de prefijos y de globals, y
-rechaza nombres con punto y dunder.
+rechaza nombres dunder.
+
+**Alcance.** El mismo commit también rechaza nombres con punto (L203-209 del
+diff). Sus comentarios atribuyen esa guarda a otro advisory, GHSA-4489 (L140,
+L204, L208, L286): es un cambio aparte, **fuera de alcance** y no modelado.
+Solo se modela la parte de CVE-2026-79657 / GHSA-x99w.
 
 Inglés: [README.md](README.md). Ejercicios: [PRACTICE.md](PRACTICE.md).
 
@@ -20,7 +25,7 @@ Inglés: [README.md](README.md). Ejercicios: [PRACTICE.md](PRACTICE.md).
   `pickle.Unpickler`, `find_class`, `eval`, `exec` ni importa los módulos
   nombrados; `tests/test_adversarial.py` lo comprueba sobre el AST y con mocks.
 - `src/c9nltk/policy.py` aplica la decisión de `find_class` **antes**
-  (`pre`, líneas L201-202 del diff) y **después** del fix (`post`, L203-245)
+  (`pre`, líneas L201-202 del diff) y **después** del fix (`post`, L210-245)
   sobre esas cadenas. Los chequeos posteriores a la resolución de `_resolve`
   (L168-198) usan una tabla de símbolos escrita a mano
   (`fixtures/symbols.tsv`) en lugar de `getattr`.
@@ -34,7 +39,7 @@ de líneas del diff guardado (ver [SOURCES.md](SOURCES.md)).
 
 | Clase | n | pre permite | post permite | pre: sink alcanzable | post: sink alcanzable |
 |---|---|---|---|---|---|
-| pos (gadgets) | 11 | 11 | 0 | 9 | 0 |
+| pos (gadgets) | 10 | 10 | 0 | 8 | 0 |
 | neg (legítimos, sin cambio) | 6 | 6 | 6 | 0 | 0 |
 | compat (legítimos, ahora permitidos) | 4 | 0 | 4 | 0 | 0 |
 

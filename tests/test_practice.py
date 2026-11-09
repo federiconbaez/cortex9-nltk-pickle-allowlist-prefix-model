@@ -26,9 +26,12 @@ class Practice(unittest.TestCase):
         self.assertEqual(both("model", "numpy.f2py.crackfortran", "myeval"),
                          ("ALLOW", "REJECT_DENIED_MODULE"))
 
-    def test_level_4_dotted_name(self):
-        self.assertEqual(both("model", "sklearn", "os.system"),
-                         ("ALLOW", "REJECT_DOTTED"))
+    def test_level_4_qualname_gadget_blocked_by_module(self):
+        # Blocked by the denied-module backstop (GHSA-x99w), not by the
+        # dotted-name guard, which belongs to GHSA-4489 and is out of scope.
+        self.assertEqual(both("punkt", "nltk.tokenize.repp",
+                              "ReppTokenizer._execute"),
+                         ("ALLOW", "REJECT_DENIED_MODULE"))
 
     def test_level_5_same_module_sink(self):
         self.assertEqual(both("model", "numpy", "load"),

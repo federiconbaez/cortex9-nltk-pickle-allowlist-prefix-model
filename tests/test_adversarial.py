@@ -87,6 +87,13 @@ class PolicyEdges(unittest.TestCase):
         self.assertEqual(policy.decide("pre", "punkt", "nltk.tokenizer", "X")[0],
                          "REJECT_NOT_ALLOWLISTED")
 
+    def test_dotted_guard_is_out_of_scope(self):
+        # GHSA-4489's dotted-name guard (diff L203-209) is not modelled.
+        src = (cases.ROOT / "src/c9nltk/policy.py").read_text(encoding="utf-8")
+        self.assertNotIn("REJECT_DOTTED", src)
+        self.assertEqual(policy.decide("post", "model", "sklearn", "os.system")[0],
+                         "ALLOW_UNRESOLVED")
+
     def test_dunder_requires_both_ends(self):
         self.assertEqual(policy.decide("post", "model", "numpy", "__x")[0],
                          "ALLOW_UNRESOLVED")

@@ -2,6 +2,7 @@
 """Independent derivation of fixtures/expected.tsv.
 
 Written again from the saved diff (CVE-2026-79657_nltk_c3e37113742a.diff),
+only the GHSA-x99w part: the dotted-name guard (GHSA-4489) is left out,
 without importing src/. Each version is a list of (rule, predicate) pairs
 evaluated in order; the first match wins. Sinks come from
 fixtures/symbols.tsv.
@@ -71,7 +72,6 @@ def pre(cfg, mod, name, syms):
 def post(cfg, mod, name, syms):
     mods, exact = CFG[cfg]["post"]
     rules = [
-        ("REJECT_DOTTED", lambda: "." in name),
         ("REJECT_DUNDER", lambda: len(name) >= 4 and name[:2] == "__"
          and name[-2:] == "__"),
         ("REJECT_DENIED_GLOBAL", lambda: (mod, name) in DENIED_G),

@@ -1,9 +1,8 @@
 # Hand-derived from the saved diff. class: pos (gadget), neg (legit, same on both), compat (legit, differs).
 # id	class	config	encoding	module	name	hand_pre	hand_post
-p01_repp_execute_dotted	pos	punkt	stack_global	nltk.tokenize.repp	ReppTokenizer._execute	ALLOW	REJECT_DOTTED
+p01_repp_execute	pos	punkt	stack_global	nltk.tokenize.repp	ReppTokenizer._execute	ALLOW	REJECT_DENIED_MODULE
 p02_repp_class	pos	punkt	global	nltk.tokenize.repp	ReppTokenizer	ALLOW	REJECT_DENIED_MODULE
 p03_f2py_myeval	pos	model	stack_global	numpy.f2py.crackfortran	myeval	ALLOW	REJECT_DENIED_MODULE
-p04_sklearn_dotted_os_system	pos	model	stack_global	sklearn	os.system	ALLOW	REJECT_DOTTED
 p05_numpy_load	pos	model	stack_global	numpy	load	ALLOW	REJECT_DENIED_GLOBAL
 p06_numpy_dunder_builtins	pos	model	memo	numpy	__builtins__	ALLOW	REJECT_DUNDER
 p07_os_system_misconfig	pos	misconfig_os	global	os	system	ALLOW	REJECT_DENIED_MODULE

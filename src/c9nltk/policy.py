@@ -126,10 +126,15 @@ def _resolve_post(module, name, symbols):
 
 def decide_post(cfg: Config, module: str, name: str,
                 symbols=None) -> tuple[str, str]:
-    """DIFF L203-245 (+): the four guards, then the allowlists."""
+    """DIFF L210-245 (+): dunder, denied-global and denied-module guards,
+    then the allowlists.
+
+    Out of scope: the dotted-name guard of the same commit (L203-209). The
+    diff's own comments attribute it to a separate advisory, GHSA-4489
+    (L140, L204, L208, L286), not to CVE-2026-79657 / GHSA-x99w, so it is
+    not modelled.
+    """
     symbols = symbols or {}
-    if "." in name:
-        return "REJECT_DOTTED", "L205-209"
     if name.startswith("__") and name.endswith("__"):
         return "REJECT_DUNDER", "L213-216"
     if (module, name) in DENIED_GLOBALS:

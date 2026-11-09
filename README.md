@@ -7,7 +7,12 @@ such as `nltk.tokenize.repp.ReppTokenizer._execute` (subprocess) or
 `numpy.f2py.crackfortran.myeval` (eval). The fix, commit
 `c3e37113742a1ebeeb4f2ca58941f320f98805ea` (NLTK 3.10.3), adds exact
 `(module, qualname)` allowlists, a denylist of module prefixes and globals,
-and rejects dotted and dunder names.
+and rejects dunder names.
+
+**Scope.** The same commit also rejects dotted names (diff L203-209). Its
+comments attribute that guard to a separate advisory, GHSA-4489 (L140, L204,
+L208, L286), so it is a separate change, **out of scope** here and not
+modelled. Only the CVE-2026-79657 / GHSA-x99w part is modelled.
 
 Spanish: [README.es.md](README.es.md). Exercises: [PRACTICE.md](PRACTICE.md).
 
@@ -19,7 +24,7 @@ Spanish: [README.es.md](README.es.md). Exercises: [PRACTICE.md](PRACTICE.md).
   `find_class`, `eval`, `exec` and imports of the named modules are never
   used; `tests/test_adversarial.py` checks this on the AST and with mocks.
 - `src/c9nltk/policy.py` applies the `find_class` decision **before**
-  (`pre`, diff lines L201-202) and **after** the fix (`post`, L203-245) to
+  (`pre`, diff lines L201-202) and **after** the fix (`post`, L210-245) to
   those strings. The post-resolution checks of `_resolve` (L168-198) use a
   hand-written symbol table (`fixtures/symbols.tsv`) instead of `getattr`.
 - No NLTK, numpy or sklearn is installed or imported. Fixture pickles carry
@@ -33,12 +38,13 @@ range of the saved diff `CVE-2026-79657_nltk_c3e37113742a.diff` (see
 
 | Class | n | pre allowed | post allowed | pre: named sink reachable | post: sink reachable |
 |---|---|---|---|---|---|
-| pos (gadgets) | 11 | 11 | 0 | 9 | 0 |
+| pos (gadgets) | 10 | 10 | 0 | 8 | 0 |
 | neg (legitimate, unchanged) | 6 | 6 | 6 | 0 | 0 |
 | compat (legitimate, newly allowed) | 4 | 0 | 4 | 0 | 0 |
 
 Examples: `ReppTokenizer._execute` under the Punkt list: pre `ALLOW`
-(prefix `nltk.tokenize`, L440), post `REJECT_DOTTED` (L205-209).
+(prefix `nltk.tokenize`, L440), post `REJECT_DENIED_MODULE` (L236-240,
+`nltk.tokenize.repp` is a denied module prefix).
 `numpy.f2py.crackfortran.myeval` under the transition-parser list: pre
 `ALLOW` (prefix `numpy`, L15), post `REJECT_DENIED_MODULE` (L236-240).
 `numpy.load`: post `REJECT_DENIED_GLOBAL` (L219-223).
